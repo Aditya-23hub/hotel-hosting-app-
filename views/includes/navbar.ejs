@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md bg-white border-bottom sticky-top">
+  <div class="container-fluid">
+
+    <!-- LEFT: Brand + Icon -->
+    <a class="navbar-brand fw-bold" href="/">Wanderlust</a>
+    <a class="navbar-brand" href="#"><i class="fa-regular fa-compass"></i></a>
+
+    <!-- TOGGLER -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- CENTER + RIGHT -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- CENTER LINKS -->
+      <ul class="navbar-nav me-auto">   <!-- 👈 me-auto pushes next div to right -->
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Add new Listings</a>
+        </li>
+      </ul>
+
+      <!-- RIGHT LINKS -->
+      <div class="navbar-nav">
+        <% if(!currUser) { %>
+          <a class="nav-link" href="/signup">Sign up</a>
+          <a class="nav-link" href="/login">Log in</a>
+        <% } %>
+        <% if(currUser) { %>
+          <a class="nav-link" href="/logout">Log out</a>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</nav>
