@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+!.env.example
+new.env
+material_ui-/
+*.zip
+npm-debug.log*
