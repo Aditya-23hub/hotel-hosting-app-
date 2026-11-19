@@ -14,7 +14,8 @@ const localStrategy=require("passport-local");
 const User=require("./models/user.js");
 /// url  mongo db serbver se coonect krne ke ,iye code use hoo rhaa hai 
 
-const Mongose_url = process.env.MONGODB_URI;
+// const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
 //  const Mongose_url="mongodb://127.0.0.1:27017/wanderlust";
 //   const wrapAsyn = require("./init/utils/wrapAsyn.js");
 
@@ -270,15 +271,51 @@ app.use((err, req, res, next) => {
         message
     });
 });
+// async function startServer() {
+//     try {
+
+//         // Connect to MongoDB Atlas
+//         await mongoose.connect(dbUrl);
+
+//         console.log("Connected to MongoDB Atlas");
+
+//         // Start the server
+//         const PORT = process.env.PORT || 8080;
+
+//         app.listen(PORT, "0.0.0.0", () => {
+//             console.log(`Server running on port ${PORT}`);
+//         });
+
+//     } catch (err) {
+
+//         console.log("Database connection failed:", err);
+
+//         process.exit(1);
+//     }
+// }
+
+
 async function startServer() {
+    console.log("Starting application...");
+
     try {
+        // Check MongoDB URL
+        console.log("MongoDB URL loaded:", Boolean(dbUrl));
+        console.log(
+            "MongoDB URL format:",
+            dbUrl?.startsWith("mongodb+srv://") ? "Correct prefix" : "Incorrect prefix"
+        );
 
-        // Connect to MongoDB Atlas
-        await mongoose.connect(Mongose_url);
+        if (!dbUrl) {
+            throw new Error("ATLASDB_URL is missing from .env");
+        }
 
-        console.log("Connected to MongoDB Atlas");
+        console.log("Connecting to MongoDB Atlas...");
 
-        // Start the server
+        await mongoose.connect(dbUrl);
+
+        console.log("Connected to MongoDB Atlas!");
+
         const PORT = process.env.PORT || 8080;
 
         app.listen(PORT, "0.0.0.0", () => {
@@ -286,9 +323,7 @@ async function startServer() {
         });
 
     } catch (err) {
-
-        console.log("Database connection failed:", err);
-
+        console.error("Database connection failed:", err.message);
         process.exit(1);
     }
 }
